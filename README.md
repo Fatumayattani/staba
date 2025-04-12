@@ -32,7 +32,7 @@ flowchart LR
     D --> E[🔮 Gemini API generates diagnosis]
     E --> F[📦 Upload diagnosis_output.json to Storacha]
     F --> G[📊 Streamlit frontend fetches and displays diagnosis]
-
+```
 
 ## 💡 Features
 
