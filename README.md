@@ -26,13 +26,12 @@ This project aims to bridge the gap between symptom self-reporting and actionabl
 ```mermaid
 flowchart LR
     A[User inputs symptoms via Streamlit frontend]
-    A --> B[Symptom Collector Agent (uAgents)]
-    B --> C[Upload symptoms.json to Storacha (IPFS)]
-    C --> D[Diagnosis Generator Agent (uAgents)]
-    D --> E[Gemini API generates diagnosis]
-    E --> F[Upload diagnosis_output.json to Storacha]
-    F --> G[Streamlit frontend fetches and displays diagnosis]
-
+    A --> B["Symptom Collector Agent (uAgents)"]
+    B --> C["Upload symptoms.json to Storacha (IPFS)"]
+    C --> D["Diagnosis Generator Agent (uAgents)"]
+    D --> E["Gemini API generates diagnosis"]
+    E --> F["Upload diagnosis_output.json to Storacha"]
+    F --> G["Streamlit frontend fetches and displays diagnosis"]
 ```
 
 ## 💡 Features
