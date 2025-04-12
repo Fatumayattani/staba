@@ -33,7 +33,6 @@ flowchart LR
     E --> F[📦 Upload diagnosis_output.json to Storacha]
     F --> G[📊 Streamlit frontend fetches and displays diagnosis]
 
----
 
 ## 💡 Features
 
