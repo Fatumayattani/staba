@@ -40,7 +40,9 @@ staba/
 ├── .env
 ├── requirements.txt
 ├── README.md
-└── architecture.md
+└── Architecture.md
+├── ProjectStructure.md
+└── StorachaIntegration.md
 ```
 
 ---
