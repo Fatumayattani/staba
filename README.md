@@ -28,22 +28,17 @@ flowchart TD
     %% Styling
     classDef pink fill:#fff0f5,color:#ff69b4,stroke:#ff69b4
     
-    %% Nodes
-    A[User inputs symptoms\nvia Streamlit frontend]:::pink
-    B[Symptom Collector Agent\n(uAgents)]:::pink
-    C[Upload symptoms.json\nto Storacha (IPFS)]:::pink
-    D[Diagnosis Generator Agent\n(uAgents)]:::pink
-    E[Gemini API generates\ndiagnosis]:::pink
-    F[Upload diagnosis_output.json\nto Storacha]:::pink
-    G[Streamlit frontend\nfetches and displays diagnosis]:::pink
+    %% Nodes (quotes + escaped line breaks)
+    A["User inputs symptoms<br/>(via Streamlit frontend)"]:::pink
+    B["Symptom Collector Agent<br/>(uAgents)"]:::pink
+    C["Upload symptoms.json<br/>to Storacha (IPFS)"]:::pink
+    D["Diagnosis Generator Agent<br/>(uAgents)"]:::pink
+    E["Gemini API generates<br/>diagnosis"]:::pink
+    F["Upload diagnosis_output.json<br/>to Storacha"]:::pink
+    G["Streamlit frontend<br/>fetches and displays diagnosis"]:::pink
 
     %% Vertical Layout
-    A --> B
-    B --> C
-    C --> D
-    D --> E
-    E --> F
-    F --> G
+    A --> B --> C --> D --> E --> F --> G
 ```
 
 ## 💡 Features
