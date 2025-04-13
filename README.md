@@ -69,7 +69,7 @@ Absolutely! Here's a complete, detailed guide in **Markdown** format that docume
 
 ---
 
-# 🧠 Staba Agent Project Setup – Full Documentation
+# 🧠 Staba Agent Project Setup
 
 ## 📁 Project Overview
 The goal of this project is to enable **two autonomous AI agents** (Symptom Collector and Diagnosis Generator) to:
