@@ -167,6 +167,11 @@ This agent:
 - Sends IPFS link to diagnosis agent
 
 ---
+![Symptoms](./images/sympt1.png)
+
+![Symptoms1](./images/sympt2.png)
+
+
 
 ### ✅ 7. Create `diagnosis_generator_agent.py`
 
