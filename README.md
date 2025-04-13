@@ -65,249 +65,198 @@ flowchart TD
 - **B2B Licensing**: Clinics and health tech startups can license the anonymized data insights or integrate the diagnosis agent into their systems.
 
 ---
-Ah, thank you for the clarification! Let's **do it the right way this time** — using **Poetry** and the **`uagents`** framework — **and** include **creating and using Storacha spaces via CLI**. I'll take you **step-by-step from scratch**, no skipped steps. 💯
+Absolutely! Here's a complete, detailed guide in **Markdown** format that documents **everything you've done** from the beginning of the project setup for `staba`, including installing tools, setting up the agents, integrating with IPFS (via `storacha`), and attempting communication.
 
 ---
 
-## ✅ Full Setup for Two Agents with Storacha Integration using `uAgents` + Poetry + `w3`
+# 🧠 Staba Agent Project Setup – Full Documentation
+
+## 📁 Project Overview
+The goal of this project is to enable **two autonomous AI agents** (Symptom Collector and Diagnosis Generator) to:
+1. Collect user symptoms
+2. Upload data to IPFS using `storacha` CLI (`w3`)
+3. Send an IPFS link to another agent
+4. Generate a diagnosis using a Gemini AI API
 
 ---
 
-### 🧪 Step 1: Setup Your Environment with Poetry
+## ⚙️ Step-by-Step Setup
 
-Make sure Poetry is installed:
-```bash
-poetry --version
-```
+---
 
-If not installed:
+### ✅ 1. Install [Poetry](https://python-poetry.org/)
+Poetry is used for Python dependency and environment management.
+
 ```bash
 curl -sSL https://install.python-poetry.org | python3 -
 ```
 
----
-
-### 🚀 Step 2: Create the Project & Install Dependencies
+After installation, add Poetry to your PATH if it's not automatically added:
 
 ```bash
-mkdir staba
-poetry init
+export PATH="$HOME/.local/bin:$PATH"
 ```
 
-Add `uagents`:
+Verify:
+
 ```bash
-poetry add uagents
+poetry --version
 ```
 
 ---
 
-### 🧠 Step 3: Create the Two Agent Files
+### ✅ 2. Create Project with Poetry
 
-Inside your project:
+```bash
+poetry new staba
+cd staba
+```
+---
 
-#### 📄 `symptom_collector_agent.py`
+### ✅ 3. Add Dependencies
 
-```python
-import json
-from uagents import Agent, Context
-from uagents.setup import fund_agent_if_low
+Install `uagents` and `python-dotenv`:
 
-symptom_agent = Agent(name="symptom_collector")
-fund_agent_if_low(symptom_agent.wallet.address())
-
-@symptom_agent.on_event("startup")
-async def collect_symptoms(ctx: Context):
-    symptoms = input("Enter symptoms (comma-separated): ")
-    data = {"symptoms": symptoms.split(",")}
-    with open("symptoms.json", "w") as f:
-        json.dump(data, f, indent=2)
-    ctx.logger.info("✅ Symptoms saved to 'symptoms.json'")
-    ctx.logger.info("👉 Now use the CLI to upload the file: `w3 space use SymptomCollectorSpace && w3 up symptoms.json`")
+```bash
+poetry add uagents python-dotenv
 ```
 
 ---
 
-#### 📄 `diagnosis_generator_agent.py`
+### ✅ 4. Install `storacha` CLI for IPFS uploads
 
-```python
-import json
-import requests
-from uagents import Agent, Context
-from uagents.setup import fund_agent_if_low
-from uagents.models import Model
-
-class SymptomData(Model):
-    cid: str
-
-diagnosis_agent = Agent(name="diagnosis_generator")
-fund_agent_if_low(diagnosis_agent.wallet.address())
-
-@diagnosis_agent.on_message(model=SymptomData)
-async def handle_symptom_cid(ctx: Context, sender: str, data: SymptomData):
-    ctx.logger.info(f"📥 Received CID: {data.cid}")
-    url = f"https://w3s.link/ipfs/{data.cid}/symptoms.json"
-    response = requests.get(url)
-
-    if response.status_code == 200:
-        symptoms_data = response.json()
-        symptoms = symptoms_data.get("symptoms", [])
-        diagnosis = "Possible flu" if "cough" in symptoms else "Consult a doctor"
-
-        output = {"diagnosis": diagnosis}
-        with open("diagnosis_output.json", "w") as f:
-            json.dump(output, f, indent=2)
-
-        ctx.logger.info("✅ Diagnosis saved to 'diagnosis_output.json'")
-        ctx.logger.info("👉 Now use the CLI: `w3 space use DiagnosisGeneratorSpace && w3 up diagnosis_output.json`")
-    else:
-        ctx.logger.error("❌ Failed to fetch symptoms from IPFS.")
-```
-
----
-
-### 📦 Step 4: Install Storacha CLI (`w3`)
+Use `w3` CLI for uploading files to IPFS via Web3.Storage.
 
 ```bash
 npm install -g @web3-storage/w3cli
 ```
 
-Verify:
+Login:
+
 ```bash
-w3 --help
+w3 login
+```
+
+Create or switch to your working space:
+
+```bash
+w3 space create collector_space
+w3 space use collector_space
 ```
 
 ---
 
-### 🌌 Step 5: Create Storacha Spaces for Each Agent
+### ✅ 5. Create `models.py`
 
-Run the following:
+This file contains a shared message model both agents can use:
 
-```bash
-w3 space create SymptomCollectorSpace
-w3 space create DiagnosisGeneratorSpace
-```
+```python
+# models.py
+from uagents import Model
 
-Check:
-```bash
-w3 space ls
-```
-
-Each space will look like:
-```
-* did:key:z6Mk... SymptomCollectorSpace
-  did:key:z6Mk... DiagnosisGeneratorSpace
+class IPFSMessage(Model):
+    ipfs_link: str
 ```
 
 ---
 
-### 📁 Step 6: Run Agents
+### ✅ 6. Create `symptom_collector_agent.py`
 
-In one terminal:
+This agent:
+- Prompts user for symptoms
+- Saves to a JSON file
+- Uploads to IPFS via `w3`
+- Sends IPFS link to diagnosis agent
+
+ IPFS URL.")
+        return
+
+    await ctx.send(diagnosis_agent_address, IPFSMessage(ipfs_link=ipfs_url))
+    print("✅ IPFS link sent!")
+
+if __name__ == "__main__":
+    symptom_collector_agent.run()
+```
+
+---
+
+### ✅ 7. Create `diagnosis_generator_agent.py`
+
+This agent:
+- Receives IPFS link
+- Logs the link (diagnosis generation will be added)
+---
+
+### ✅ 8. Setup `.env` File
+
+Create a `.env` file for storing your Gemini API key:
+
+```dotenv
+GEMINI_API_KEY=your_gemini_api_key_here
+```
+
+---
+
+### ✅ 9. Run the Agents
+
+> Run these in separate terminals.
+
+**Terminal 1: Run Diagnosis Agent**
+
+```bash
+poetry run python diagnosis_generator_agent.py
+```
+
+Copy the address printed in the terminal.
+
+---
+
+**Terminal 2: Run Symptom Collector**
 
 ```bash
 poetry run python symptom_collector_agent.py
 ```
 
-✅ Enter symptoms and save the file.
-
-Then upload the file:
-```bash
-w3 space use SymptomCollectorSpace
-w3 up symptoms.json
-```
-
-Copy the **CID** shown (e.g. `bafybeibx...`).
+Paste the diagnosis agent's address inside the script, rerun if needed.
 
 ---
 
-In another terminal, run:
-```bash
-poetry run python diagnosis_generator_agent.py
+## ✅ Agent Communication Check
+
+You should see a log like this in the Diagnosis Agent terminal:
+
+```
+✅ Received IPFS link: https://w3s.link/ipfs/bafy...
 ```
 
-Then send the CID to it by adding this quick one-time agent runner script:
 
-#### 📄 `send_to_diagnosis.py`
 
-```python
-from uagents import Agent, Context
-from diagnosis_generator_agent import SymptomData
-
-sender_agent = Agent(name="symptom_sender")
-
-@sender_agent.on_event("startup")
-async def send(ctx: Context):
-    cid = input("Paste CID of uploaded symptoms.json: ")
-    await ctx.send("DIAGNOSIS_AGENT_ADDRESS", SymptomData(cid=cid))
-
-sender_agent.run()
-```
-
-Run it:
-```bash
-poetry run python send_to_diagnosis.py
-```
-
-(Replace `DIAGNOSIS_AGENT_ADDRESS` with the address shown when you start the diagnosis agent.)
+You can expand this by downloading the IPFS JSON, extracting the symptoms, and using Gemini API to generate diagnoses.
 
 ---
 
-### 🎯 Step 7: Upload the Diagnosis File
+## ❗ Common Pitfalls
 
-Once generated:
-
-```bash
-w3 space use DiagnosisGeneratorSpace
-w3 up diagnosis_output.json
-```
-
-Copy that CID and send it back using the same logic.
+| Issue | Fix |
+|------|-----|
+| No message received | Check both agents are running and using correct ports/addresses |
+| IPFS link not received | Make sure you're uploading and pasting correct URL |
+| Gemini API not responding | Check `GEMINI_API_KEY` is valid and endpoint is correct |
+| Can't install `ucan` | You don’t need it for agent-to-agent comms |
 
 ---
 
-### 🧾 Bonus: Document This in `StorachaIntegration.md`
+## ✅ Summary
 
-Would you like me to generate this Markdown file for you too?
-
-## 📁 Example Data Flow
-
-### 1. `symptoms.json`
-```json
-{
-  "user_id": "anon-123",
-  "symptoms": "persistent cough, fatigue, shortness of breath"
-}
-```
-
-Uploaded by Agent 1 to Storacha → Generates CID.
+- ✅ Poetry used to manage the project
+- ✅ Agents created with `uagents`
+- ✅ IPFS integration via `storacha` CLI (`w3`)
+- ✅ JSON file upload and message exchange via agent messaging
+- ✅ Gemini AI integration can be layered on top
 
 ---
 
-### 2. `diagnosis_output.json`
-```json
-{
-  "possible_conditions": [
-    "Bronchitis",
-    "Chronic Obstructive Pulmonary Disease (COPD)"
-  ],
-  "recommendations": "Consult a pulmonologist. Ask about spirometry tests.",
-  "source_agent": "diagnosis-generator",
-  "timestamp": "2025-04-12T18:30:00Z"
-}
-```
-
-Generated by Agent 2 using Gemini API and stored back on Storacha.
-
----
-
-## 🛠️ In Progress
-
-- [ ] Finalizing CLI for input and output.
-- [ ] Connecting UI to fetch reports via CID.
-- [ ] Adding security layer to anonymize and encrypt data further.
-- [ ] Gemini fine-tuning for local language support (Swahili, etc.).
-
----
+Let me know if you'd like this exported as a `.md` file or want the diagnosis logic added too.
 
 ## 📣 Collaboration
 
