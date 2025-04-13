@@ -58,12 +58,12 @@ Each agent gets its own "space" (namespace) to manage uploads.
 
 #### SymptomCollectorAgent
 ```bash
-w3 space create CollectorSpace
+w3 space create Collector_space
 ```
 
 #### DiagnosisGeneratorAgent
 ```bash
-w3 space create DiagnosisSpace
+w3 space create diagnosis_space
 ```
 
 To list all spaces:
@@ -73,7 +73,7 @@ w3 space ls
 
 Switch between them:
 ```bash
-w3 space use CollectorSpace
+w3 space use collector_space
 ```
 
 ---
@@ -83,35 +83,19 @@ After agent tasks complete:
 
 #### For SymptomCollectorAgent:
 ```bash
-w3 space use CollectorSpace
+w3 space use collector_space
 w3 up symptoms.json
 ```
 
 #### For DiagnosisGeneratorAgent:
 ```bash
-w3 space use DiagnosisSpace
+w3 space use Diagnosis_space
 w3 up diagnosis_output.json
 ```
 
 This uploads the files to IPFS and provides a link like:
 ```
 https://w3s.link/ipfs/bafy.../symptoms.json
-```
-
----
-
-## 🛠 Automating CLI Uploads (Optional)
-In Python, we can shell out to automate uploads:
-
-```python
-import subprocess
-
-def upload_to_space(space, file):
-    subprocess.run(["w3", "space", "use", space])
-    subprocess.run(["w3", "up", file])
-
-# Example
-upload_to_space("CollectorSpace", "symptoms.json")
 ```
 
 ---
