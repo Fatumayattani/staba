@@ -1,36 +1,52 @@
 import json
 import os
 from uagents import Agent, Context
-from models import IPFSMessage  # Import the class we just updated
 from dotenv import load_dotenv
+from models import IPFSMessage  # Ensure this has: class IPFSMessage(Model): ipfs_link: str
 
-# Initialize the agent for symptom collection
+# Load environment variables
+load_dotenv()
+
+# Initialize the agent
 symptom_collector_agent = Agent(
     name="SymptomCollector",
-    port=8000,  
+    port=8000,
     endpoint=["http://127.0.0.1:8000"],
     seed="symptom_collector secret phrase"
 )
 
-load_dotenv()
+# Replace with the actual address of the diagnosis agent
+diagnosis_agent_address = "agent1qv5a5v0xmnadr9lnpnam0er9qqe2gsqh7gsl9dd2z9yx8eq5cx77jx0u3j9"
 
-# Address of Diagnosis Agent
-diagnosis_agent_address = "agent1q05ga3uxukgdzumdnq9dadflgs7dr4ry2p7fafx76s3t2fjscazej2tnpx9"
-
-# Event handler for the symptom collector agent
 @symptom_collector_agent.on_event("startup")
 async def start(ctx: Context):
-    symptoms = input("Enter your symptoms:\n> ")
-    with open("symptoms.json", "w") as f:
-        json.dump({"symptoms": symptoms}, f)
+    try:
+        # Collect symptoms
+        symptoms = input("🩺 Enter your symptoms (e.g., headache, sore throat, fatigue):\n> ")
 
-    # Upload the symptoms file to IPFS via w3
-    os.system("w3 space use collector_space")
-    os.system("w3 up symptoms.json")
+        # Save to JSON file
+        with open("symptoms.json", "w") as f:
+            json.dump({"symptoms": symptoms}, f)
 
-    ipfs_url = input("Paste the IPFS URL from Storacha here:\n> ")
-    # Send the IPFS URL to the Diagnosis Agent
-    await ctx.send(diagnosis_agent_address, IPFSMessage(ipfs_link=ipfs_url))
+        # Upload file to IPFS via w3
+        print("📦 Uploading symptoms to IPFS...")
+        os.system("w3 space use collector_space")
+        os.system("w3 up symptoms.json")
+
+        # Prompt for IPFS URL
+        ipfs_url = input("🔗 Paste the IPFS URL (e.g., https://w3s.link/ipfs/…):\n> ").strip()
+
+        if not ipfs_url.startswith("http"):
+            print("❌ Invalid IPFS URL. Make sure it starts with http.")
+            return
+
+        # Send the IPFS link to the Diagnosis Agent
+        await ctx.send(diagnosis_agent_address, IPFSMessage(ipfs_link=ipfs_url))
+        print("✅ Sent IPFS link to Diagnosis Agent.")
+
+    except Exception as e:
+        ctx.logger.error(f"❌ Error in symptom collection: {e}")
 
 if __name__ == "__main__":
-    symptom_collector_agent.run()  # Start the symptom collector agent
+    symptom_collector_agent.run()
+
