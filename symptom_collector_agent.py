@@ -16,7 +16,7 @@ symptom_collector_agent = Agent(
 )
 
 # Replace with the actual address of the diagnosis agent
-diagnosis_agent_address = "http://127.0.0.1:8001/submit"  # Use the Diagnosis Agent's endpoint
+diagnosis_agent_address = "agent1q05ga3uxukgdzumdnq9dadflgs7dr4ry2p7fafx76s3t2fjscazej2tnpx9"
 
 @symptom_collector_agent.on_event("startup")
 async def start(ctx: Context):

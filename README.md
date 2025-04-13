@@ -168,16 +168,6 @@ This agent:
 - Uploads to IPFS via `w3`
 - Sends IPFS link to diagnosis agent
 
- IPFS URL.")
-        return
-
-    await ctx.send(diagnosis_agent_address, IPFSMessage(ipfs_link=ipfs_url))
-    print("✅ IPFS link sent!")
-
-if __name__ == "__main__":
-    symptom_collector_agent.run()
-```
-
 ---
 
 ### ✅ 7. Create `diagnosis_generator_agent.py`
