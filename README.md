@@ -223,9 +223,6 @@ You should see a log like this in the Diagnosis Agent terminal:
 ```
 
 
-
-You can expand this by downloading the IPFS JSON, extracting the symptoms, and using Gemini API to generate diagnoses.
-
 ---
 
 ## ❗ Common Pitfalls
@@ -249,12 +246,10 @@ You can expand this by downloading the IPFS JSON, extracting the symptoms, and u
 
 ---
 
-Let me know if you'd like this exported as a `.md` file or want the diagnosis logic added too.
-
 ## 📣 Collaboration
 
 This project is built for the **Hot AI Integrations, Hotter Storage
-** Hackathon, focused on building **ensemble learning AI agents** powered by decentralized storage.
+** Hackathon, focused on building **ensemble learning AI agents** powered by decentralized stoLet me know if you'd like this exported as a `.md` file or want the diagnosis logic added toorage.
 ## Let's Collaborate!
 
 I'm always open to collaboration and would love to improve this project further with your input. Feel free to reach out to me via email at [fyattani@gmail.com](mailto:fyattani@gmail.com) or on X: [@fatumayattani](https://x.com/fatumayattani).
