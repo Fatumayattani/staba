@@ -19,7 +19,8 @@ diagnosis_agent = Agent(
     name="DiagnosisAgent",
     port=8001,
     endpoint=["http://127.0.0.1:8001"],
-    seed="diagnosis secret phrase"
+    seed="diagnosis secret phrase",
+    public=True
 )
 
 # Function to get diagnosis from Gemini
