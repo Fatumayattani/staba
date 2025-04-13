@@ -10,7 +10,8 @@ symptom_collector_agent = Agent(
     name="SymptomCollector",
     port=8000,
     endpoint=["http://127.0.0.1:8000"],
-    seed="symptom_collector secret phrase"
+    seed="symptom_collector secret phrase",
+    public=True
 )
 
 diagnosis_agent_address = "agent1qv5a5v0xmnadr9lnpnam0er9qqe2gsqh7gsl9dd2z9yx8eq5cx77jx0u3j9"
