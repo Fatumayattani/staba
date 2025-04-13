@@ -134,12 +134,13 @@ w3 login
 ![Login](./images/w1.png)
 
 
-Create or switch to your working space:
+Create your working space:
 
 ```bash
 w3 space create collector_space
 w3 space use collector_space
 ```
+![Spaces](./images/spacess.png)
 
 ---
 
