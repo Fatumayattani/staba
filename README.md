@@ -131,6 +131,8 @@ Login:
 ```bash
 w3 login
 ```
+![Login](./images/w1.png)
+
 
 Create or switch to your working space:
 
