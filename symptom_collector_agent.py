@@ -16,7 +16,7 @@ symptom_collector_agent = Agent(
 )
 
 # Replace with the actual address of the diagnosis agent
-diagnosis_agent_address = "agent1q05ga3uxukgdzumdnq9dadflgs7dr4ry2p7fafx76s3t2fjscazej2tnpx9"
+diagnosis_agent_address = "agent1qv5a5v0xmnadr9lnpnam0er9qqe2gsqh7gsl9dd2z9yx8eq5cx77jx0u3j9"
 
 @symptom_collector_agent.on_event("startup")
 async def start(ctx: Context):

@@ -65,11 +65,6 @@ flowchart TD
 - **B2B Licensing**: Clinics and health tech startups can license the anonymized data insights or integrate the diagnosis agent into their systems.
 
 ---
-Absolutely! Here's a complete, detailed guide in **Markdown** format that documents **everything you've done** from the beginning of the project setup for `staba`, including installing tools, setting up the agents, integrating with IPFS (via `storacha`), and attempting communication.
-
----
-
-# 🧠 Staba Agent Project Setup
 
 ## 📁 Project Overview
 The goal of this project is to enable **two autonomous AI agents** (Symptom Collector and Diagnosis Generator) to:
@@ -250,5 +245,10 @@ Let me know if you'd like this exported as a `.md` file or want the diagnosis lo
 
 ## 📣 Collaboration
 
-This project is built for the **Spicy AI Collaboration with Storacha** Hackathon, focused on building **ensemble learning AI agents** powered by decentralized storage.
+This project is built for the **Hot AI Integrations, Hotter Storage
+** Hackathon, focused on building **ensemble learning AI agents** powered by decentralized storage.
+## Let's Collaborate!
+
+I'm always open to collaboration and would love to improve this project further with your input. Feel free to reach out to me via email at [fyattani@gmail.com](mailto:fyattani@gmail.com) or on X: [@fatumayattani](https://x.com/fatumayattani).
+
 
