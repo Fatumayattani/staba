@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { TextField, Button, Box, Typography, Alert } from '@mui/material';
 import { submitSymptoms } from '../api';
-import { Symptoms } from '../types';
+import type { Symptoms } from '../types';
 
 export const SymptomForm = () => {
   const { register, handleSubmit, formState: { errors } } = useForm<Symptoms>();
