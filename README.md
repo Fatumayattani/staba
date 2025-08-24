@@ -197,7 +197,7 @@ If you’d like to contribute new features (new agents, analytics, or storage fl
 
 ## 🙏 Inspiration
 
-This project was inspired by [Tripmate-Planner](https://github.com/Dhruv-Varshney-developer/Tripmate-Planner) by **Dhruv Varshney**, which demonstrated how to build a modular AI agent system with ElizaOS.
+This project was inspired by [Tripmate-Planner](https://github.com/Dhruv-Varshney-developer/Tripmate-Planner) by **Dhruv Varshney**, which demonstrated how to build a modular AI agent system with ElizaOS and Storacha.
 
 
 
