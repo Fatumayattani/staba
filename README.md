@@ -204,7 +204,6 @@ flowchart TD
 * [Storacha](https://storacha.network/) – Decentralized storage
 * Inspired by [Tripmate-Planner](https://github.com/Dhruv-Varshney-developer/Tripmate-Planner)
 
-```
 
 
 
