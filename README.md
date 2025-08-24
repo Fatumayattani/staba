@@ -1,257 +1,185 @@
-# 🧠 Staba
+# Staba – AI Health Assistant Bot  
 
-An intelligent ensemble AI system built with **Fetch.ai's uAgents**, **Storacha decentralized storage**, and **Gemini API** that collects user-reported health symptoms and provides AI-generated diagnosis reports. It also anonymously stores data for medical research.
-
----
-
-## 📌 Overview
-
-This project aims to bridge the gap between symptom self-reporting and actionable health insights. It enables users to receive personalized health feedback while contributing anonymized data to improve healthcare AI models.
-
-- Agent 1 (Symptom Collector Agent): Accepts user health symptoms and uploads to Storacha.
-- Agent 2 (Diagnosis Generator Agent): Fetches symptoms from Storacha, uses Gemini API to analyze, then outputs a report and uploads back to Storacha.
+Staba is an **AI-powered Telegram bot** built with **ElizaOS** and **Storacha decentralized storage**.  
+It collects user-reported health symptoms, generates AI-driven diagnosis reports, and securely stores anonymized data for medical research.  
 
 ---
 
-## 🚀 Key Technologies
+## 📌 Overview  
+Staba bridges the gap between self-reported symptoms and actionable health insights.  
+Through a simple Telegram chat, users can:  
 
-- [🔁 Fetch.ai's uAgents](https://github.com/fetchai/uAgents): For building autonomous, decentralized AI agents.
-- [📦 Storacha](https://docs.storacha.network): Decentralized, IPFS-backed data storage with access control.
-- [🧠 Gemini API](https://ai.google.dev/gemini-api/docs): LLM API used to analyze symptoms and generate health insights.
+- Report their symptoms  
+- Receive personalized AI-generated feedback  
+- Contribute anonymized data to healthcare research  
 
 ---
 
-## 🧩 Architecture
+## 🤖 Bot Agents  
+- **Symptom Collector (Telegram + ElizaOS)**: Interacts with the user in Telegram, collects symptoms, and uploads to **Storacha**.  
+- **Diagnosis Generator (ElizaOS Agent)**: Fetches stored symptoms, generates a diagnosis report using LLM APIs, and delivers results back to the user.  
+
+---
+
+## 🚀 Key Technologies  
+- **ElizaOS** – conversational AI agent framework with Telegram integration  
+- **Storacha** – decentralized IPFS-backed storage for secure health data  
+- **LLM APIs (Gemini / OpenAI / others)** – for generating health insights  
+
+---
+
+## 🧩 Architecture  
+
+### System Overview  
+```mermaid
+graph TD
+    User[👩 User on Telegram] -->|Reports Symptoms| Bot[🤖 Staba Bot (ElizaOS)]
+    Bot -->|Uploads Data| Storacha[📦 Storacha (IPFS)]
+    Storacha -->|Provides IPFS Link| DiagnosisAgent[🧠 Diagnosis Generator]
+    DiagnosisAgent -->|Uses LLM API| LLM[🔮 Gemini / OpenAI API]
+    LLM -->|Generates Report| DiagnosisAgent
+    DiagnosisAgent -->|Stores Report| Storacha
+    DiagnosisAgent -->|Sends Results| Bot
+    Bot -->|Delivers Feedback| User
+````
+
+---
+
+### Interaction Flow (Sequence Diagram)
 
 ```mermaid
-flowchart TD
-    %% Styling
-    classDef pink fill:#fff0f5,color:#ff69b4,stroke:#ff69b4
-    
-    %% Nodes (quotes + escaped line breaks)
-    A["User inputs symptoms<br/>(via Streamlit frontend)"]:::pink
-    B["Symptom Collector Agent<br/>(uAgents)"]:::pink
-    C["Upload symptoms.json<br/>to Storacha (IPFS)"]:::pink
-    D["Diagnosis Generator Agent<br/>(uAgents)"]:::pink
-    E["Gemini API generates<br/>diagnosis"]:::pink
-    F["Upload diagnosis_output.json<br/>to Storacha"]:::pink
-    G["Streamlit frontend<br/>fetches and displays diagnosis"]:::pink
+sequenceDiagram
+    participant U as User
+    participant B as Staba Bot
+    participant S as Storacha
+    participant D as Diagnosis Agent
+    participant L as LLM API
 
-    %% Vertical Layout
-    A --> B --> C --> D --> E --> F --> G
+    U->>B: Report symptoms
+    B->>S: Upload symptoms (IPFS)
+    S-->>B: Return IPFS link
+    B->>D: Send IPFS link
+    D->>S: Fetch symptoms
+    D->>L: Analyze symptoms
+    L-->>D: Return diagnosis
+    D->>S: Store diagnosis report
+    D-->>B: Send diagnosis summary
+    B-->>U: Deliver feedback
 ```
+
+---
+
 ## 💡 Features
 
-- **AI Agent Collaboration**: Two autonomous agents communicating via Storacha and sharing context.
-- **Ensemble Learning**: Agent 2 learns from structured input by Agent 1 and builds insights.
-- **Decentralized Storage**: All files uploaded/downloaded from IPFS via Storacha.
-- **Research-Grade Data**: Anonymized symptom–diagnosis pairs are stored for future medical AI use.
-- **Extensible**: Easily expandable to include more agents (e.g., nutrition, treatment suggester).
+* **Conversational Symptom Collection** – users simply chat with the bot
+* **AI Diagnosis Reports** – personalized insights generated instantly
+* **Decentralized Storage** – files stored securely on Storacha (IPFS)
+* **Privacy First** – anonymized before research use
+* **Extensible** – additional agents (nutrition, lifestyle, treatment suggester) can be added
 
 ---
 
 ## 🧑‍⚕️ Use Cases
 
-- Telehealth platforms
-- Virtual health assistants
-- Clinics analyzing aggregated symptom patterns
-- Self-care mobile apps
+* Personal health self-checks
+* Virtual health assistants in clinics
+* Telehealth platforms
+* Research into aggregated, anonymized health patterns
 
 ---
 
 ## 💸 Business Model
 
-- **Freemium model**: Free for individuals with optional premium features (e.g., historical data, export PDF reports).
-- **B2B Licensing**: Clinics and health tech startups can license the anonymized data insights or integrate the diagnosis agent into their systems.
+* **Freemium**: Free for individuals, premium for advanced features (PDF reports, history tracking).
+* **B2B Licensing**: Clinics & startups can integrate the diagnosis agent or license anonymized datasets.
 
 ---
 
-## 📁 Project Overview
-The goal of this project is to enable **two autonomous AI agents** (Symptom Collector and Diagnosis Generator) to:
-1. Collect user symptoms
-2. Upload data to IPFS using `storacha` CLI (`w3`)
-3. Send an IPFS link to another agent
-4. Generate a diagnosis using a Gemini AI API
+## 💬 Sample Bot Interaction
 
----
+Here’s an example of how a user interacts with **Staba** on Telegram:
 
-## ⚙️ Step-by-Step Setup
-
----
-
-### ✅ 1. Install [Poetry](https://python-poetry.org/)
-Poetry is used for Python dependency and environment management.
-
-```bash
-curl -sSL https://install.python-poetry.org | python3 -
 ```
+👩 User: Hi Staba, I’ve been having headaches and fatigue for 3 days.  
 
-After installation, add Poetry to your PATH if it's not automatically added:
+🤖 Staba: Thanks for sharing. Do you also have any of these symptoms: fever, cough, or nausea?  
 
-```bash
-export PATH="$HOME/.local/bin:$PATH"
-```
+👩 User: Mild fever and body aches.  
 
-Verify:
+🤖 Staba: Got it. Please wait while I analyze your symptoms...  
 
-```bash
-poetry --version
+📦 [Symptoms securely uploaded to Storacha]  
+
+🤖 Staba: Based on your reported symptoms, here are some possible causes:  
+- Viral infection (such as flu)  
+- Dehydration or sleep-related issues  
+
+⚠️ This is **not a medical diagnosis**. Please consult a healthcare professional for confirmation.  
+
+Would you like me to save this anonymously for medical research?  
+
+👩 User: Yes.  
+
+🤖 Staba: ✅ Your report has been securely stored (IPFS hash: `bafy...xyz`).  
+Thank you for contributing to better healthcare research!  
 ```
 
 ---
 
-### ✅ 2. Create Project with Poetry
+## ⚙️ Setup & Running the Bot
+
+### 1. Clone & Install Dependencies
 
 ```bash
-poetry new staba
+git clone https://github.com/yourusername/staba.git
 cd staba
-```
----
-
-### ✅ 3. Add Dependencies
-
-Install `uagents` and `python-dotenv`:
-
-```bash
-poetry add uagents python-dotenv
+poetry install
 ```
 
----
-
-### ✅ 4. Install `storacha` CLI for IPFS uploads
-
-Use `w3` CLI for uploading files to IPFS via Web3.Storage.
+### 2. Install Storacha CLI
 
 ```bash
 npm install -g @web3-storage/w3cli
-```
-
-Login:
-
-```bash
 w3 login
 ```
-![Login](./images/w1.png)
 
+### 3. Configure Environment
 
-Create your working space:
+Create a `.env` file:
 
-```bash
-w3 space create collector_space
-w3 space use collector_space
 ```
-![Spaces](./images/spacess.png)
-
----
-
-### ✅ 5. Create `models.py`
-
-This file contains a shared message model both agents can use:
-
-```python
-# models.py
-from uagents import Model
-
-class IPFSMessage(Model):
-    ipfs_link: str
-```
-
----
-
-### ✅ 6. Create `symptom_collector_agent.py`
-
-This agent:
-- Prompts user for symptoms
-- Saves to a JSON file
-- Uploads to IPFS via `w3`
-- Sends IPFS link to diagnosis agent
-
----
-![Symptoms](./images/sympt1.png)
-
-![Symptoms1](./images/sympt2.png)
-
-
-
-### ✅ 7. Create `diagnosis_generator_agent.py`
-
-This agent:
-- Receives IPFS link
-- Logs the link (diagnosis generation will be added)
----
-
-### ✅ 8. Setup `.env` File
-
-Create a `.env` file for storing your Gemini API key:
-
-```dotenv
+TELEGRAM_BOT_TOKEN=your_bot_token_here
 GEMINI_API_KEY=your_gemini_api_key_here
 ```
 
----
-
-### ✅ 9. Run the Agents
-
-> Run these in separate terminals.
-
-**Terminal 1: Run Diagnosis Agent**
+### 4. Run the Bot
 
 ```bash
-poetry run python diagnosis_generator_agent.py
+poetry run python bot.py
 ```
 
-Copy the address printed in the terminal.
+Your Telegram bot should now be live 🎉
 
 ---
 
-**Terminal 2: Run Symptom Collector**
+## ❗ Troubleshooting
 
-```bash
-poetry run python symptom_collector_agent.py
-```
-
-Paste the diagnosis agent's address inside the script, rerun if needed.
-
----
-
-## ✅ Agent Communication Check
-
-You should see a log like this in the Diagnosis Agent terminal:
-
-```
-✅ Received IPFS link: https://w3s.link/ipfs/bafy...
-```
-
-
----
-
-## ❗ Common Pitfalls
-
-| Issue | Fix |
-|------|-----|
-| No message received | Check both agents are running and using correct ports/addresses |
-| IPFS link not received | Make sure you're uploading and pasting correct URL |
-| Gemini API not responding | Check `GEMINI_API_KEY` is valid and endpoint is correct |
-| Can't install `ucan` | You don’t need it for agent-to-agent comms |
-
----
-
-## ✅ Summary
-
-- ✅ Poetry used to manage the project
-- ✅ Agents created with `uagents`
-- ✅ IPFS integration via `storacha` CLI (`w3`)
-- ✅ JSON file upload and message exchange via agent messaging
-- ✅ Gemini AI integration can be layered on top
+| Issue             | Fix                                            |
+| ----------------- | ---------------------------------------------- |
+| Bot not replying  | Check if `TELEGRAM_BOT_TOKEN` is valid         |
+| IPFS upload fails | Ensure Storacha CLI (`w3`) is logged in        |
+| No diagnosis      | Verify LLM API key (Gemini/OpenAI/etc.) is set |
 
 ---
 
 ## 📣 Collaboration
 
-This project is built for the **Hot AI Integrations, Hotter Storage
-** Hackathon, focused on building **ensemble learning AI agents** powered by decentralized stoLet me know if you'd like this exported as a `.md` file or want the diagnosis logic added toorage.
-## Let's Collaborate!
+This project was built for the **Hot AI Integrations, Hotter Storage Hackathon**.
+Contributions, ideas, and collaborations are always welcome!
 
-I'm always open to collaboration and would love to improve this project further with your input. Feel free to reach out to me via email at [fyattani@gmail.com](mailto:fyattani@gmail.com) or on X: [@fatumayattani](https://x.com/fatumayattani).
+📧 **[fyattani@gmail.com](mailto:fyattani@gmail.com)**
+🐦 **@fatumayattani**
+
+---
 
 
