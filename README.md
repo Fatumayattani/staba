@@ -1,197 +1,219 @@
-# 🩺 Staba – AI Symptom & Diagnosis Bot
+# 🤖 Staba – AI Health Assistant
 
-[![Made with ElizaOS](https://img.shields.io/badge/Made%20with-ElizaOS-blueviolet?style=for-the-badge&logo=protocols)](https://github.com/elizaos/eliza)
-[![Powered by Storacha](https://img.shields.io/badge/Powered%20by-Storacha-orange?style=for-the-badge&logo=ipfs)](https://storacha.network)
-[![Telegram Bot](https://img.shields.io/badge/Telegram-Bot-blue?style=for-the-badge&logo=telegram)](https://t.me/)
-[![LLM Powered](https://img.shields.io/badge/LLM-OpenAI%2FGemini-green?style=for-the-badge&logo=OpenAI)](https://openai.com)
+[![Made with ElizaOS](https://img.shields.io/badge/Made%20with-ElizaOS-blue)](https://github.com/elizaOS/eliza)
+[![Powered by Storacha](https://img.shields.io/badge/Powered%20by-Storacha-green)](https://storacha.network/)
+[![Telegram Bot](https://img.shields.io/badge/Telegram-Bot-blue)](https://t.me/)
 
----
+Staba is an AI-powered health assistant built with **ElizaOS** and **Storacha**.  
+It consists of two main agents:
+- 📝 **Symptom Collector Agent** → Collects symptoms interactively via Telegram.  
+- 🧠 **Diagnosis Agent** → Analyzes structured data and suggests possible diagnoses.  
 
-## 📌 Overview
-
-**Staba** is an intelligent AI-powered Telegram bot that helps users **report symptoms** and receive **preliminary diagnostic insights**.  
-It integrates with **ElizaOS** for conversational flow and **Storacha** for secure, decentralized storage of anonymized medical data.
-
-> ⚠️ **Disclaimer**: Staba is for **educational and research purposes only**.  
-> It is **not a substitute for professional medical advice**. Always consult a qualified healthcare provider.
+Data is stored **decentrally on Storacha**, ensuring privacy and security.
 
 ---
 
-## ✨ Features
+## 🌟 Features
 
-- 🤖 **Telegram Bot** interface for easy symptom reporting  
-- 🧠 **Diagnosis Agent** powered by LLMs (OpenAI / Gemini via OpenRouter)  
-- 🔐 **Decentralized Storage** with **Storacha** (built on IPFS/Filecoin)  
-- 📊 **Anonymized Data Storage** for research & analytics  
-- 🛠️ **Built with ElizaOS** for modular multi-agent orchestration  
-
----
-
-### 📊 Interaction Flow
-
-```mermaid
-sequenceDiagram
-    participant U as User
-    participant B as Staba Bot
-    participant D as Diagnosis Agent
-    participant L as LLM API
-    participant S as Storacha
-
-    U->>B: Report symptoms
-    B->>D: Forward symptoms
-    D->>L: Analyze with LLM
-    L-->>D: Return diagnosis
-    D-->>B: Send diagnosis summary
-    B-->>U: Deliver feedback
-    B->>S: Store symptoms + diagnosis (anonymized)
-```
+- Multi-agent architecture (Symptom Collector + Diagnosis Agent)
+- Telegram Bot integration
+- Decentralized storage with Storacha
+- Powered by ElizaOS for flexible agent orchestration
+- Extendable with custom agents and plugins
 
 ---
 
-## 💬 Example Bot Interaction
+## 📦 Prerequisites
 
-Here’s how Staba feels in action:
-
-```
-👩 User: I have a sore throat, mild fever, and fatigue.
-
-🤖 Staba: Thanks for sharing. Based on your symptoms, here are some possible conditions:
-- Viral pharyngitis
-- Seasonal flu
-- Mild bacterial infection
-
-⚠️ Recommendation: Stay hydrated, rest, and monitor your fever. If symptoms worsen, consult a doctor.
-
-📦 (Data stored securely on Storacha for anonymized research)
-```
+- [Node.js](https://nodejs.org/) v22 or higher
+- [pnpm](https://pnpm.io/) package manager
+- [Git](https://git-scm.com/)
+- [Telegram](https://core.telegram.org/bots) account (for bot creation)
+- [OpenRouter API key](https://openrouter.ai/)
+- [Storacha](https://storacha.network/) account + `w3cli` tool
 
 ---
 
-## ⚡ Prerequisites
+## ⚙️ Installation
 
-* [Node.js](https://nodejs.org/) v22 or higher
-* [pnpm](https://pnpm.io/) package manager
-* [Git](https://git-scm.com/)
-* [Telegram account](https://t.me/) (for bot creation)
-* [OpenRouter API key](https://openrouter.ai/)
-* [Storacha account](https://storacha.network) and `w3cli` tools
-
----
-
-## 🚀 Installation Steps
-
-### 1. Clone the Repository
+1. **Clone the Repository**
 
 ```bash
 git clone https://github.com/Fatumayattani/staba
 cd staba
+````
+
+2. **Initialize Project & Install ElizaOS**
+
+```bash
+pnpm init
+pnpm add elizaos
 ```
 
-### 2. Install Dependencies
+3. **Install Dependencies**
 
 ```bash
 pnpm install
 ```
 
-### 3. Set Up Storacha Integration
+---
 
-a. Install w3cli tool:
+## 🗂 Storacha Integration
+
+1. Install `w3cli`:
 
 ```bash
 npm install -g @web3-storage/w3cli
 ```
 
-b. Generate a DID (Decentralized Identifier):
+2. Generate a DID:
 
 ```bash
 w3 key create
 ```
 
-Save both the **private key** (`Mg...`) and **public key** (`did:key:`).
+Save both **private key** (starts with `Mg...`) and **public DID** (`did:key:...`).
 
-c. Create a Space:
+3. Create a Space:
 
 ```bash
-w3 space create [YOUR_SPACE_NAME]
+w3 space create staba-space
 ```
 
-Save the **space DID**.
-
-d. Create Delegation:
+4. Create Delegation:
 
 ```bash
 w3 delegation create -c space/blob/add -c space/index/add -c filecoin/offer -c upload/add <YOUR_AGENT_DID> --base64
 ```
 
 Save the delegation output for your `.env`.
----
-
-### 4. Set Up Telegram Bot
-
-1. Open [@BotFather](https://t.me/BotFather) on Telegram
-2. Create a new bot with `/newbot`
-3. Save the bot token
 
 ---
 
-### 5. Configure Environment Variables
+## 🤖 Telegram Bot Setup
 
-Create a `.env` file:
+1. Go to [@BotFather](https://t.me/BotFather) on Telegram
+2. Run `/newbot` and follow the prompts
+3. Save the **bot token** provided
+
+---
+
+## 🔑 Environment Variables
+
+Create a `.env` file in your project root:
 
 ```bash
 cp .env.example .env
 ```
 
-Fill in:
+Fill in your keys:
 
 ```env
-# Required API Keys
+# Required
 OPENROUTER_API_KEY="your-openrouter-api-key"
 TELEGRAM_BOT_TOKEN="your-telegram-bot-token"
 
-# Storacha Configuration
+# Storacha
 STORACHA__AGENT_PRIVATE_KEY="your-private-key"
 STORACHA__AGENT_DELEGATION="your-delegation"
 
-# WebSocket Configuration (if integrating with other agents)
-WS_URL="ws://localhost:8765"
+# WebSocket (optional)
+WS_URL="wss://staba-production.up.railway.app/"
 ```
 
 ---
 
-### 6. Start the Bot
+## 🧩 Agents Setup
+
+Create an `agents/` folder:
 
 ```bash
-pnpm start
+mkdir agents
 ```
 
-For custom character configs:
+Example `agents/symptom_collector.json`:
+
+```json
+{
+  "name": "SymptomCollector",
+  "description": "Collects symptoms from the user via Telegram and structures them.",
+  "plugins": ["telegram", "storacha"],
+  "inputs": ["symptom"],
+  "outputs": ["structured_symptom_data"]
+}
+```
+
+Example `agents/diagnosis_agent.json`:
+
+```json
+{
+  "name": "DiagnosisAgent",
+  "description": "Analyzes structured symptoms and suggests possible diagnoses.",
+  "plugins": ["openai", "storacha"],
+  "inputs": ["structured_symptom_data"],
+  "outputs": ["diagnosis_suggestion"]
+}
+```
+
+---
+
+## 🚀 Running the Project
+
+Start the agents together:
 
 ```bash
-pnpm start --characters="path/to/your/character.json"
+pnpm start --characters="agents/symptom_collector.json,agents/diagnosis_agent.json"
 ```
 
 ---
 
-## 🔗 Integration
+## 📱 Sample Bot Interaction
 
-Staba can be extended into a **multi-agent system** with:
+**User →**
+Hi, I’m feeling unwell.
 
-* **Other ElizaOS agents** (doctors, pharmacies, etc.)
-* **Storacha-powered research pipelines**
+**Bot (Symptom Collector) →**
+Can you describe your symptoms?
+
+**User →**
+I have a sore throat and mild fever.
+
+**Bot (Diagnosis Agent) →**
+Based on your symptoms, it could be a common cold or flu.
+Would you like me to suggest self-care steps?
 
 ---
 
-## 📜 License
+## 📊 Architecture
 
-MIT License © 2025 Fatumayattani
+```mermaid
+flowchart TD
+    A[User via Telegram] --> B[Symptom Collector Agent]
+    B -->|Stores| C[Storacha]
+    B --> D[Diagnosis Agent]
+    D -->|Retrieves| C
+    D --> E[Diagnosis Suggestion]
+    E --> A
+```
 
 ---
 
-## 🤝 Contributing
+## 🙌 Acknowledgments
 
-Pull requests are welcome!
-If you’d like to contribute new features (new agents, analytics, or storage flows), open an issue first to discuss.
+* [ElizaOS](https://github.com/elizaOS/eliza) – Agent framework
+* [Storacha](https://storacha.network/) – Decentralized storage
+* Inspired by [Tripmate-Planner](https://github.com/Dhruv-Varshney-developer/Tripmate-Planner)
+
+```
+
+---
+
+This version fixes your confusion by:
+- Using **`agents/`** instead of `characters/`
+- Clear **two-agent setup flow**
+- Direct **ElizaOS installation**
+- Includes **Storacha-only (no IPFS mix-up)**
+- Professional GitHub-polished format
 
 ---
 
