@@ -27,20 +27,6 @@ It integrates with **ElizaOS** for conversational flow and **Storacha** for secu
 
 ---
 
-## 🗂️ Architecture
-
-### 📊 System Overview
-```mermaid
-graph TD
-    User[👩 User on Telegram] -->|Reports Symptoms| Bot[🤖 Staba Bot (ElizaOS)]
-    Bot -->|Sends Symptoms| DiagnosisAgent[🧠 Diagnosis Generator]
-    DiagnosisAgent -->|Uses LLM API| LLM[🔮 Gemini / OpenAI API]
-    LLM -->|Returns Insights| DiagnosisAgent
-    DiagnosisAgent -->|Sends Report| Bot
-    Bot -->|Delivers Feedback| User
-    Bot -->|Stores Data (symptoms + diagnosis)| Storacha[📦 Storacha]
-````
-
 ### 📊 Interaction Flow
 
 ```mermaid
