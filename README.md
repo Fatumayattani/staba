@@ -206,20 +206,5 @@ flowchart TD
 
 ```
 
----
-
-This version fixes your confusion by:
-- Using **`agents/`** instead of `characters/`
-- Clear **two-agent setup flow**
-- Direct **ElizaOS installation**
-- Includes **Storacha-only (no IPFS mix-up)**
-- Professional GitHub-polished format
-
----
-
-## 🙏 Inspiration
-
-This project was inspired by [Tripmate-Planner](https://github.com/Dhruv-Varshney-developer/Tripmate-Planner) by **Dhruv Varshney**, which demonstrated how to build a modular AI agent system with ElizaOS and Storacha.
-
 
 
