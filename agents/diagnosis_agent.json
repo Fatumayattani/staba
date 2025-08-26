@@ -1,10 +1,12 @@
 {
   "name": "StabaDiagnosis",
+  "clients": ["telegram"],
   "plugins": ["storagePlugin"],
-  "adapters": ["telegram"],
   "modelProvider": "openrouter",
   "settings": {
-    "secrets": {},
+    "secrets": {
+      "TELEGRAM_BOT_TOKEN":""
+        },
     "voice": {
       "model": "en_US-hfc_male-medium"
     }
