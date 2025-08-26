@@ -1,7 +1,7 @@
 {
   "name": "StabaDiagnosis",
   "plugins": ["storagePlugin"],
-  "clients": ["telegram"],
+  "clients": [],
   "modelProvider": "openrouter",
   "settings": {
     "secrets": {},

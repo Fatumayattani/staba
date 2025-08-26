@@ -1,7 +1,7 @@
 {
   "name": "Staba",
   "plugins": ["storagePlugin"],
-  "clients": ["telegram"],
+   "adapters": ["telegram"],
   "modelProvider": "openrouter",
   "settings": {
     "secrets": {},
