@@ -1,0 +1,9 @@
+{
+  "name": "TestBot",
+  "adapters": ["telegram"],
+  "plugins": [],
+  "modelProvider": "openrouter",
+  "settings": {
+    "secrets": {}
+  }
+}

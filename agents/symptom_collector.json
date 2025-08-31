@@ -26,11 +26,11 @@
     [
       {
         "user": "{{user1}}",
-        "content": { "text": "hey staba, I’ve been coughing and feeling tired" }
+        "content": { "text": "hey staba, I have been coughing and feeling tired" }
       },
       {
         "user": "Staba",
-        "content": { "text": "I hear you. Let’s collect your symptoms step by step:\n• Symptom 1: Cough\n• Symptom 2: Fatigue\nWould you like to add duration and severity?" }
+        "content": { "text": "I hear you. Lets collect your symptoms step by step:\n• Symptom 1: Cough\n• Symptom 2: Fatigue\nWould you like to add duration and severity?" }
       },
       {
         "user": "{{user1}}",
